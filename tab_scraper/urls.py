@@ -20,5 +20,5 @@ from scraperapp.views import IndexView, TabView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', IndexView.as_view(), name='index'),
-    url(r'^tabs/', TabView.as_view(), name='tabs')
+    url(r'^tabs/(?P<url>.+)', TabView.as_view(), name='tabs')
 ]
