@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from scraperapp.views import IndexView, TabView
+from scraperapp.views import IndexView, TabView, PlayView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', IndexView.as_view(), name='index'),
+    url(r'(?P<url>.+html$)', PlayView.as_view(), name='play'),
     url(r'^tabs/(?P<url>.+)', TabView.as_view(), name='tabs')
 ]
