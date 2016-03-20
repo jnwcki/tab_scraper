@@ -16,7 +16,7 @@ class IndexView(TemplateView):
                                            )).content
             # context['scraped_content'] = scraped_content
             bb_obj = BeautifulSoup(scraped_content, 'html.parser')
-            results_list = bb_obj.find_all(class_='tabslist fs-12')
+            results_list = str(bb_obj.find_all(class_='tabslist fs-12'))
             print(results_list)
             context['scraped_content'] = results_list
         return context
@@ -49,6 +49,9 @@ class PlayView(TemplateView):
         bb_obj = BeautifulSoup(scraped_content, 'html.parser')
 
         results_list = [result.prettify() for result in bb_obj.find_all('pre')]
+        context['scraped_content'] = [pre.span.decompose() for pre in BeautifulSoup(results_list)]
+
+
         print(results_list)
-        context['scraped_content'] = results_list
+        # context['scraped_content'] = results_list
         return context
