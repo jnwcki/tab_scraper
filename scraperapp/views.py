@@ -49,9 +49,8 @@ class PlayView(TemplateView):
         bb_obj = BeautifulSoup(scraped_content, 'html.parser')
 
         results_list = [result.prettify() for result in bb_obj.find_all('pre')]
-        context['scraped_content'] = [pre.span.decompose() for pre in BeautifulSoup(results_list)]
+        # context['scraped_content'] = [pre.span.decompose() for pre in BeautifulSoup(results_list)]
 
-
-        print(results_list)
-        # context['scraped_content'] = results_list
+        # print(results_list)
+        context['scraped_content'] = results_list
         return context
