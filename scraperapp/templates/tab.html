@@ -1,5 +1,11 @@
-{% extends 'base.html'}
+{% extends 'base.html' %}
 
 {% block content %}
+{% autoescape off %}
 
+  {% for item in scraped_content %}
+    {{ item }}
+  {% endfor %}
+
+{% endautoescape %}
 {% endblock %}

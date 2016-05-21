@@ -43,15 +43,14 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    {% block form %}
-                    <form class="navbar-form navbar-left" role="search" method="get">
+                    <form class="navbar-form navbar-left" role="search" action="{% url 'index' %}" method="post">
+                      {% csrf_token %}
                         <div class="form-group">
                             <input type="text" name="band_search_string" class="form-control" placeholder="Search By Band">
                             <input type="text" name="song_search_string" class="form-control" placeholder="Search By Song">
                         </div>
                         <button type="submit" class="btn btn-default">Submit</button>
                     </form>
-                    {% endblock form %}
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -59,9 +58,16 @@
         <!-- /.container -->
     </nav>
     <!-- Intro Header -->
-    {% block content %}
-    {% endblock %}
-
+    <header class="intro" style="padding: 100px !important;">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                {% block content %}
+                {% endblock %}
+                </div>
+            </div>
+        </div>
+    </header>
     <!-- jQuery -->
     <script src="{% static 'js/jquery.js' %}"></script>
 
