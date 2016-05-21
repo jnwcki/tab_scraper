@@ -15,8 +15,14 @@ class IndexView(TemplateView):
                                        searched_song
                                        )).content
         bb_obj = BeautifulSoup(scraped_content, 'html.parser')
-        results_list = str(bb_obj.find_all(class_='tabslist fs-12'))
-        return render(request, 'list.html', {"scraped_content": results_list})
+        results_list = [result.prettify() for result in bb_obj.find_all(class_='tabslist')]
+
+        table_results_list = BeautifulSoup(results_list[0], 'html.parser')
+        # print(table_results_list.prettify())
+        # for tag in table_results_list.select('table'):
+        #     tag['class'] = 'table'
+        # print(table_results_list.prettify())
+        return render(request, 'list.html', {"scraped_content": table_results_list.prettify()})
 
 
 class TabListView(TemplateView):
@@ -29,6 +35,7 @@ class TabListView(TemplateView):
                                        )).content
         bb_obj = BeautifulSoup(scraped_content, 'html.parser')
         results_list = bb_obj.find_all(class_='tabslist')
+        print(results_list)
         context['scraped_content'] = results_list
         return context
 
@@ -42,5 +49,11 @@ class TabView(TemplateView):
             kwargs['url'])).content
         bb_obj = BeautifulSoup(scraped_content, 'html.parser')
         results_list = [result.prettify() for result in bb_obj.find_all('pre')]
+
+        tab_pane = BeautifulSoup(results_list[1], 'html.parser')
+        tab_pane.span.decompose()
+        for tag in tab_pane.select('a'):
+            tag.unwrap()
+        results_list[1] = tab_pane.prettify()
         context['scraped_content'] = results_list
         return context
